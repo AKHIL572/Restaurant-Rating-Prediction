@@ -1,166 +1,218 @@
-# 🍽️ Restaurant Rating Prediction – End-to-End Machine Learning Project
+# 🍽 Restaurant Rating Prediction System
 
-## 📌 Project Overview
-This project builds an **end-to-end machine learning system** to predict **restaurant aggregate ratings** based on operational, location, pricing, and service-related features.
+A **Machine Learning powered analytics system** that predicts the **aggregate rating of a restaurant** based on location, cost, cuisines, and service features.
 
-The project follows **industry-standard data science practices**, covering:
-- Data cleaning & preprocessing
+This project demonstrates a **complete end-to-end Data Science workflow**, including:
+
+- Data Understanding
 - Exploratory Data Analysis (EDA)
-- Feature engineering
-- Model training & comparison
-- Cross-validation & hyperparameter tuning
-- Model interpretation & business insights
-
-The final solution uses a **tuned Gradient Boosting Regressor**, achieving strong predictive performance and interpretable insights.
-
----
-
-## 🎯 Business Objective
-Restaurant ratings influence:
-- Customer trust
-- Online visibility
-- Revenue & conversions
-
-**Goal:**  
-Predict restaurant ratings and identify **key factors that drive higher ratings**, enabling data-driven business decisions.
+- Feature Engineering
+- Machine Learning Modeling
+- Hyperparameter Tuning
+- Model Evaluation
+- Model Deployment using Streamlit
 
 ---
 
-## 🛠️ Tech Stack
-- **Programming:** Python  
-- **Libraries:**  
-  - Data Handling: `pandas`, `numpy`  
-  - Visualization: `matplotlib`, `seaborn`  
-  - Machine Learning: `scikit-learn`  
-  - Model Persistence: `joblib`  
+# 📊 Problem Statement
+
+Restaurant platforms contain thousands of restaurants with attributes such as:
+
+- Location
+- Cuisine
+- Price range
+- Delivery services
+- Customer votes
+
+The goal of this project is to **predict the restaurant’s aggregate rating** using machine learning techniques so businesses can understand the factors that influence customer satisfaction.
 
 ---
 
-## 📁 Project Structure
+# 🧠 Machine Learning Workflow
 
-Restaurant-Rating-Prediction/
+The project follows a structured ML pipeline:
+
+1. Data Understanding  
+2. Exploratory Data Analysis  
+3. Feature Engineering  
+4. Data Preprocessing  
+5. Model Training  
+6. Hyperparameter Tuning  
+7. Model Evaluation  
+8. Model Deployment
+
+---
+
+# 📂 Project Structure
+
+```
+Restaurant_Rating_Prediction
 │
-├── data/
+├── Dataset/
 │ ├── Res_dataset.csv
-│ ├── Cleaned_dataset.csv
-│ └── Updates_dataset.csv
+│ ├── cleaned_dataset.csv
 │
-├── notebooks/
-│ ├── 01_data_cleaning.ipynb
-│ ├── 02_eda_outliers.ipynb
-│ ├── 03_modeling.ipynb
-│ └── 04_business_insights.ipynb
+├── Models/
+│ ├── restaurant_rating_model.pkl
+│ └── feature_columns.pkl
 │
-├── models/
-│ └── final_gradient_boosting_model.pkl
+├── Notebook/
+│ ├── 1_data_understanding.ipynb
+│ ├── 2_eda.ipynb
+│ ├── 3_preprocessing_&_modelling.ipynb
+│ └── 4_business_insights.ipynb
 │
-├── README.md
-└── .gitignore
-
+├── app.py
+├── requirements.txt
+└── README.md
+```
 
 ---
 
-## 🔄 Project Workflow
+# 📊 Dataset Information
 
-### 1️⃣ Data Cleaning & Preprocessing
-- Removed duplicates
-- Handled missing values
-- Converted categorical Yes/No columns into numerical format
-- Saved cleaned dataset for reproducibility
+The dataset contains **9551 restaurant records** with attributes such as:
 
-### 2️⃣ Exploratory Data Analysis (EDA)
+| Feature | Description |
+|------|-------------|
+| Restaurant Name | Name of the restaurant |
+| Country Code | Country identifier |
+| City | City location |
+| Latitude / Longitude | Geographic coordinates |
+| Cuisines | Types of cuisines offered |
+| Average Cost for Two | Approximate meal cost |
+| Price Range | Cost category |
+| Has Table Booking | Reservation availability |
+| Has Online Delivery | Delivery availability |
+| Votes | Number of customer votes |
+| Aggregate Rating | Target variable |
+
+---
+
+# 🔎 Exploratory Data Analysis
+
+EDA was performed to understand patterns in the data:
+
 - Rating distribution analysis
-- City & country-wise restaurant distribution
 - Cuisine popularity analysis
-- Outlier detection using IQR
-- Correlation analysis
+- Price range vs rating relationship
+- Geographic restaurant distribution
+- Feature correlation analysis
+- Outlier detection
 
-### 3️⃣ Feature Engineering
-- Cuisine count per restaurant
-- Cost category derived from price range
-- One-hot encoding for categorical variables
-- Leakage prevention (excluded target-derived features)
-
-### 4️⃣ Model Building & Evaluation
-Models evaluated:
-- Linear Regression
-- Decision Tree Regressor
-- Random Forest Regressor
-- Gradient Boosting Regressor
-
-Evaluation metrics:
-- MSE
-- MAE
-- RMSE
-- R² Score
+These insights helped guide **feature engineering and model selection**.
 
 ---
 
-## 📊 Model Performance (Cross-Validation)
+# ⚙ Feature Engineering
 
-| Model | Mean CV R² | Std CV R² |
-|------|------------|-----------|
-| Linear Regression | 0.38 | 0.26 |
-| Decision Tree | 0.91 | 0.01 |
-| Random Forest | 0.95 | 0.00 |
-| Gradient Boosting | 0.95 | 0.00 |
+The following engineered features were created:
 
-📌 **Insight:**  
-Tree-based models significantly outperform linear regression, indicating **strong non-linear relationships** in the data.
+- **Cuisine_Count** → Number of cuisines offered
+- **Log_Votes** → Log transformation of votes
+- **Log_Average_Cost** → Log transformation of cost
+- **Cuisine Encoding** → Top cuisines converted into binary features
+- **Cost_Category** → Derived cost class (Low / Medium / High / Premium)
 
 ---
 
-## 🔧 Hyperparameter Tuning
-- Used **RandomizedSearchCV** on Gradient Boosting
-- Optimized parameters:
-  - `n_estimators`
-  - `learning_rate`
-  - `max_depth`
-  - `subsample`
+# 🤖 Models Used
 
-### ✅ Final Model
-- **Model:** Tuned Gradient Boosting Regressor
-- **Final R² Score:** ~0.95
-- Model saved using `joblib`
+Several models were trained and compared:
+
+| Model | Purpose |
+|------|--------|
+| Linear Regression | Baseline model |
+| Decision Tree | Non-linear modeling |
+| Random Forest | Ensemble model |
+| Gradient Boosting | Final optimized model |
 
 ---
 
-## 🔍 Model Interpretability
-- Feature importance analysis
-- Identified key drivers influencing restaurant ratings
-- Grouped feature importance for high-level insights
+# 🏆 Best Model
+
+**Gradient Boosting Regressor**
+
+Performance metrics:
+
+| Metric | Score |
+|------|------|
+| R² Score | ~0.67 |
+| RMSE | ~0.32 |
+| MAE | ~0.23 |
+
+After hyperparameter tuning, **Gradient Boosting provided the best performance**.
 
 ---
 
-## 📈 Business Insights
-- Restaurants offering **online delivery** tend to have higher ratings
-- **Table booking availability** correlates with better customer ratings
-- Higher **price ranges** generally receive higher and more consistent ratings
-- Cuisine diversity and customer votes strongly influence ratings
+# 🚀 Streamlit Web Application
+
+A **Streamlit app** was built to allow users to interact with the model.
+
+Users can input:
+
+- Country
+- City
+- Price Range
+- Average Cost for Two
+- Delivery Availability
+- Table Booking
+- Number of Votes
+- Cuisines
+
+The model predicts the **expected restaurant rating**.
 
 ---
 
-## 🚀 Key Takeaways
-- End-to-end ML pipeline following industry best practices
-- Strong model performance with cross-validation
-- Clear business-focused insights, not just predictions
-- Reproducible and production-ready workflow
+# 🖥 How to Run the Project
 
----
+## 1️⃣ Clone the Repository
 
-## 📌 Future Improvements
-- Deploy model using Flask / FastAPI
-- Create an interactive dashboard (Power BI / Tableau)
-- Integrate SHAP for deeper explainability
-- Add real-time prediction interface
+```bash
+git clone https://github.com/your-username/restaurant-rating-prediction.git
+cd restaurant-rating-prediction
+```
+2️⃣ Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+3️⃣ Run the Streamlit App
+```bash
+streamlit run app.py
+```
+📈 Example Prediction
 
----
+Example Input:
+City → Bangalore
+Price Range → Medium
+Cost for Two → 500
+Online Delivery → Yes
+Votes → 100
+Cuisine → North Indian, Chinese
+Output:
+Predicted Rating: 4.1 / 5
 
-## 👤 Author
-**Akhil T V**  
-Aspiring Data Scientist  
-📫 *Open to Data Science & Machine Learning roles*
+📊 Business Insights
+Important findings from the analysis:
+- Number of Votes strongly influences rating reliability
+- City and location affect restaurant popularity
+- Cuisine types influence customer preference
+- Price category correlates with perceived quality
+These insights help restaurant owners and food delivery platforms make data-driven decisions.
 
----
+🛠 Technologies Used
+- Python
+- Pandas
+- NumPy
+- Scikit-learn
+- Matplotlib
+- Seaborn
+- Streamlit
+- Joblib
 
-⭐ If you find this project useful, feel free to star the repository!
+👨‍💻 Author
+
+Akhil T V
+Aspiring Data Scientist / Data Analyst
+
+This project demonstrates my ability to build end-to-end machine learning solutions from data exploration to deployment.
