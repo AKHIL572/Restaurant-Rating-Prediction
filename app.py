@@ -24,7 +24,7 @@ st.divider()
 PROJECT_ROOT = Path(__file__).parent
 MODEL_PATH = PROJECT_ROOT / "Model" / "restaurant_rating_model.pkl"
 FEATURE_PATH = PROJECT_ROOT / "Model" / "feature_columns.pkl"
-DATA_PATH = PROJECT_ROOT / "Dataset" / "cleaned_dataset.csv"
+DATA_PATH = PROJECT_ROOT / "Dataset" / "Cleaned_dataset.csv"
 
 
 @st.cache_resource
