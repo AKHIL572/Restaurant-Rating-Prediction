@@ -1,7 +1,40 @@
-streamlit
-pandas
-numpy
-scikit-learn
-matplotlib
-seaborn
-joblib
+# Restaurant Rating Prediction — Pinned Dependencies
+#
+# These exact versions are what produced the model artifacts in Model/
+# (restaurant_rating_model.pkl, feature_columns.pkl, model_metadata.pkl). This
+# is not a "known-stable, generally recommended" list -- it is pinned to match
+# the environment the model was actually trained and pickled in, because
+# scikit-learn's own docs warn that unpickling a model with a different
+# (especially older) version than the one that trained it can fail outright
+# or silently misbehave. If you retrain the model in a different environment,
+# regenerate this file to match that environment instead of reusing this one.
+#
+# If you deploy on Streamlit Community Cloud: this file can stay at the repo
+# root even though app.py lives in Streamlit_App/ -- Community Cloud searches
+# the entrypoint's own directory first, then falls back to the repo root.
+
+# --- Core data processing ---
+pandas==3.0.2
+numpy==2.4.4
+
+# --- Statistics (Notebook 2: t-tests, ANOVA, chi-square, VIF) ---
+scipy==1.17.1
+statsmodels==0.14.6
+
+# --- Modeling ---
+scikit-learn==1.8.0
+joblib==1.5.3
+
+# --- Visualization (notebooks) ---
+matplotlib==3.10.8
+seaborn==0.13.2
+
+# --- App ---
+streamlit==1.59.2
+
+# --- Notebook execution environment ---
+jupyterlab==4.2.4
+ipykernel==6.29.5
+
+# --- Testing ---
+pytest==9.1.1
