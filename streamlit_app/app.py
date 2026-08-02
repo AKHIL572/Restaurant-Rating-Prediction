@@ -4,7 +4,7 @@ import numpy as np
 import joblib
 from pathlib import Path
 
-from predict_utils import (
+from streamlit_app.predict_utils import (
     get_top_n_cuisines,
     build_input_row,
     predict_rating,
