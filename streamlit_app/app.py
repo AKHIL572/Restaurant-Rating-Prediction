@@ -34,10 +34,10 @@ st.divider()
 # Load Model & Assets
 # ==========================================
 PROJECT_ROOT = Path(__file__).parent
-MODEL_PATH = PROJECT_ROOT / "Model" / "restaurant_rating_model.pkl"
-FEATURE_PATH = PROJECT_ROOT / "Model" / "feature_columns.pkl"
-METADATA_PATH = PROJECT_ROOT / "Model" / "model_metadata.pkl"
-DATA_PATH = PROJECT_ROOT / "Dataset" / "cleaned_dataset.csv"
+MODEL_PATH = PROJECT_ROOT / "model" / "restaurant_rating_model.pkl"
+FEATURE_PATH = PROJECT_ROOT / "model" / "feature_columns.pkl"
+METADATA_PATH = PROJECT_ROOT / "model" / "model_metadata.pkl"
+DATA_PATH = PROJECT_ROOT / "dataset" / "cleaned_dataset.csv"
 
 
 @st.cache_resource
