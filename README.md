@@ -51,7 +51,7 @@ Full detail: [`docs/01_problem_statement.md`](docs/01_problem_statement.md)
 - **Retracted finding:** an earlier draft of this analysis claimed online delivery improves
   ratings. Controlling for price tier shows the effect direction actually reverses depending on
   price tier — there is no clean, defensible "delivery helps" or "delivery hurts" claim in this
-  data. See [`Notebook/04_business_insights.ipynb`](Notebook/04_business_insights.ipynb) for the
+  data. See [`notebook/04_business_insights.ipynb`](notebook/04_business_insights.ipynb) for the
   full confound analysis.
 - **A currency normalization bug was found and fixed**: the raw dataset's cost field is stored in
   each restaurant's local currency with no conversion — meaning Indonesia appeared ~450x more
@@ -82,31 +82,31 @@ Res_dataset.csv → [Clean & Normalize] → [EDA + Stats] → [Model + Segment E
 Restaurant-Rating-Prediction/
 ├── docs/                     Problem statement, BRD, SRS, user stories, data dictionary,
 │                             assumptions/limitations, model card, architecture overview
-├── Dataset/
-│   ├── Res_dataset.csv               raw Zomato extract
+├── dataset/                  Dataset files
+│   ├── Res_dataset.csv               raw Zomato extract (9,551 restaurants)
 │   ├── cleaned_dataset.csv           post-cleaning + currency normalization (Notebook 1)
-│   └── model_ready_dataset.csv       post-feature-engineering (Notebook 3)
-├── Notebook/
+│   ├── model_ready_dataset.csv       post-feature-engineering (Notebook 3)
+│   └── final_dashboard_dataset.csv   curated dataset for Power BI reporting
+├── notebook/                 Jupyter Notebooks (in execution order)
 │   ├── 01_data_understanding_and_cleaning.ipynb
 │   ├── 02_EDA.ipynb
 │   ├── 03_modeling_and_validation.ipynb
 │   └── 04_business_insights.ipynb
-├── Model/
+├── model/                    Trained regression model and artifacts
 │   ├── restaurant_rating_model.pkl
 │   ├── feature_columns.pkl
 │   └── model_metadata.pkl
-├── Dashboard/
-│   ├── restaurant_dashboard.pbix
-│   └── dashboard_screenshots/
-├── Streamlit_App/
+├── dashboard/                Interactive Power BI report & exports
+│   ├── Restaurant_dashboard.pbix
+│   └── Restaurant_dashboard.pdf
+├── streamlit_app/            Interactive Streamlit web application
 │   ├── app.py                 UI layer
 │   └── predict_utils.py       testable prediction logic (imported by app.py and by tests/)
-├── tests/
+├── tests/                    Pytest suite (31 automated tests)
 │   ├── conftest.py
 │   ├── test_data_integrity.py
 │   ├── test_model_artifacts.py
 │   └── test_app_logic.py
-├── Screenshots/
 ├── pytest.ini
 ├── requirements.txt
 ├── .gitignore
@@ -118,11 +118,11 @@ Restaurant-Rating-Prediction/
 ## Setup & Installation
 
 ```bash
-git clone https://github.com/<your-username>/Restaurant-Rating-Prediction.git
+git clone https://github.com/AKHIL572/Restaurant-Rating-Prediction.git
 cd Restaurant-Rating-Prediction
 
 python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
+source venv/bin/activate        # Windows: .\venv\Scripts\Activate.ps1
 
 pip install -r requirements.txt
 ```
@@ -134,24 +134,24 @@ pip install -r requirements.txt
 **1. Reproduce the analysis pipeline** (run in order — each notebook depends on the previous
 one's output):
 ```bash
-jupyter lab Notebook/
+jupyter lab notebook/
 ```
 Run `01_data_understanding_and_cleaning.ipynb` → `02_EDA.ipynb` →
 `03_modeling_and_validation.ipynb` → `04_business_insights.ipynb`.
 
-This regenerates `Dataset/cleaned_dataset.csv`, `Dataset/model_ready_dataset.csv`, and everything
-in `Model/`.
+This regenerates `dataset/cleaned_dataset.csv`, `dataset/model_ready_dataset.csv`, and everything
+in `model/`.
 
 **2. Run the Streamlit app:**
 ```bash
-streamlit run Streamlit_App/app.py
+streamlit run streamlit_app/app.py
 ```
 
-**3. Open the dashboard:** open `Dashboard/restaurant_dashboard.pbix` in Power BI Desktop.
+**3. Open the dashboard:** open [`dashboard/Restaurant_dashboard.pbix`](dashboard/Restaurant_dashboard.pbix) in Power BI Desktop, or inspect the 3-page export in [`dashboard/Restaurant_dashboard.pdf`](dashboard/Restaurant_dashboard.pdf).
 
 **4. Run the test suite:**
 ```bash
-pytest
+python -m pytest
 ```
 
 ---
@@ -183,7 +183,7 @@ known limitations and ethical considerations: [`docs/07_model_card.md`](docs/07_
 3. **Key Findings & Recommendations** — executive summary, retraction callout, effort/impact
    prioritization, quantified recommendations table, data limitations
 
-Screenshots: [`Screenshots/`](Screenshots/)
+Full export: [`dashboard/Restaurant_dashboard.pdf`](dashboard/Restaurant_dashboard.pdf)
 
 ---
 
@@ -195,7 +195,7 @@ bug and a model-selection bug where the saved model didn't match the one that ac
 test set).
 
 ```bash
-pytest -v
+python -m pytest -v
 ```
 
 ---

@@ -4,13 +4,22 @@ import numpy as np
 import joblib
 from pathlib import Path
 
-from streamlit_app.predict_utils import (
-    get_top_n_cuisines,
-    build_input_row,
-    predict_rating,
-    get_reliability_warnings,
-    MIN_RELIABLE_SAMPLES,
-)
+try:
+    from streamlit_app.predict_utils import (
+        get_top_n_cuisines,
+        build_input_row,
+        predict_rating,
+        get_reliability_warnings,
+        MIN_RELIABLE_SAMPLES,
+    )
+except ModuleNotFoundError:
+    from predict_utils import (
+        get_top_n_cuisines,
+        build_input_row,
+        predict_rating,
+        get_reliability_warnings,
+        MIN_RELIABLE_SAMPLES,
+    )
 
 # ==========================================
 # Page Config
@@ -35,11 +44,19 @@ st.divider()
 # ==========================================
 ROOT_DIR = Path(__file__).resolve().parent.parent
 
-MODEL_PATH = ROOT_DIR / "model" / "restaurant_rating_model.pkl"
-FEATURE_PATH = ROOT_DIR / "model" / "feature_columns.pkl"
-METADATA_PATH = ROOT_DIR / "model" / "model_metadata.pkl"
+MODEL_DIR = (
+    ROOT_DIR / "model" if (ROOT_DIR / "model").exists() else ROOT_DIR / "Model"
+)
+DATA_DIR = (
+    ROOT_DIR / "Dataset"
+    if (ROOT_DIR / "Dataset").exists()
+    else ROOT_DIR / "dataset"
+)
 
-DATA_PATH = ROOT_DIR / "Dataset" / "cleaned_dataset.csv"
+MODEL_PATH = MODEL_DIR / "restaurant_rating_model.pkl"
+FEATURE_PATH = MODEL_DIR / "feature_columns.pkl"
+METADATA_PATH = MODEL_DIR / "model_metadata.pkl"
+DATA_PATH = DATA_DIR / "cleaned_dataset.csv"
 
 
 @st.cache_resource

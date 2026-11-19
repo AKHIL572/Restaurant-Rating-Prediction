@@ -4,9 +4,26 @@ import pytest
 import sys
 from pathlib import Path
 
-# Make Streamlit_App/ and Model/ paths importable/discoverable from tests/
+# Make streamlit_app/ and model/ paths importable/discoverable from tests/
 PROJECT_ROOT = Path(__file__).parent.parent
-sys.path.insert(0, str(PROJECT_ROOT / "Streamlit_App"))
+
+streamlit_dir = (
+    PROJECT_ROOT / "streamlit_app"
+    if (PROJECT_ROOT / "streamlit_app").exists()
+    else PROJECT_ROOT / "Streamlit_App"
+)
+sys.path.insert(0, str(streamlit_dir))
+
+MODEL_DIR = (
+    PROJECT_ROOT / "model"
+    if (PROJECT_ROOT / "model").exists()
+    else PROJECT_ROOT / "Model"
+)
+DATASET_DIR = (
+    PROJECT_ROOT / "Dataset"
+    if (PROJECT_ROOT / "Dataset").exists()
+    else PROJECT_ROOT / "dataset"
+)
 
 
 @pytest.fixture(scope="session")
@@ -16,22 +33,22 @@ def project_root():
 
 @pytest.fixture(scope="session")
 def model():
-    return joblib.load(PROJECT_ROOT / "Model" / "restaurant_rating_model.pkl")
+    return joblib.load(MODEL_DIR / "restaurant_rating_model.pkl")
 
 
 @pytest.fixture(scope="session")
 def feature_columns():
-    return joblib.load(PROJECT_ROOT / "Model" / "feature_columns.pkl")
+    return joblib.load(MODEL_DIR / "feature_columns.pkl")
 
 
 @pytest.fixture(scope="session")
 def model_metadata():
-    return joblib.load(PROJECT_ROOT / "Model" / "model_metadata.pkl")
+    return joblib.load(MODEL_DIR / "model_metadata.pkl")
 
 
 @pytest.fixture(scope="session")
 def cleaned_df():
-    return pd.read_csv(PROJECT_ROOT / "Dataset" / "cleaned_dataset.csv")
+    return pd.read_csv(DATASET_DIR / "cleaned_dataset.csv")
 
 
 @pytest.fixture(scope="session")
